@@ -4,7 +4,7 @@ import com.grid.model.AbstractGridModel;
 import com.grid.model.Grid;
 import com.grid.view.GridView;
 
-// https://openclassrooms.com/fr/courses/26832-apprenez-a-programmer-en-java/25552-mieux-structurer-son-code-le-pattern-mvc
+// Inspired on https://openclassrooms.com/fr/courses/26832-apprenez-a-programmer-en-java/25552-mieux-structurer-son-code-le-pattern-mvc
 public class MyGrid {
 
 	public static void main(String[] args) {
