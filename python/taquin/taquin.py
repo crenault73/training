@@ -3,6 +3,7 @@
 from tkinter import *
 from PIL import Image, ImageTk
 import random
+import copy
 
 
 class My15PuzzleApp:
@@ -14,7 +15,7 @@ class My15PuzzleApp:
         self.window.title("Jeu de Taquin")
         self.window.iconbitmap("images/15puzzle.ico")
         self.window.config(background="white")
-        self.window.geometry(str(600) + "x" + str(600))
+        #self.window.geometry(str(600) + "x" + str(600))
         self.meal_suggestion = ""
 
         # Initialization des composants
@@ -43,7 +44,7 @@ class My15PuzzleApp:
         canvas = Canvas(self.frame, width=w, height=h, bg="#4065A4", bd=0,
                         highlightthickness=0)
         canvas.create_image(w / 2, h / 2, image=self.image)
-        # self.window.geometry(str(w) + "x" + str(h))
+        self.window.geometry(str(w) + "x" + str(h))
         self.window.resizable(False, False)
         canvas.pack(expand=YES)
 
@@ -65,12 +66,21 @@ class My15PuzzleApp:
 
     # Affichage des tuiles
     def display_tiles(self):
+        w, h = self.im.size
+        new_im = Image.new('RGB', (w, h))
         for i in range(0, 4):
             for j in range(0, 4):
+                print("Image_cropped size: " + str(self.tiles[i][j].img.width)+"/"+ str(self.tiles[i][j].img.height))
                 print("Tile N°:", self.tiles[i][j].n)
-
+                new_im.paste(self.tiles[i][j].img, (0, 0))
+        #self.image = ImageTk.PhotoImage(new_im)
+        canvas = Canvas(self.frame, width=w, height=h, bg="#4065A4", bd=0, highlightthickness=0)
+        canvas.create_image(w / 2, h / 2, image=self.image)
+        canvas.pack(expand=YES)
+#
     def shuffle_tiles(self):
-        tmp = self.tiles
+        tmp = copy.deepcopy(self.tiles)
+        # tmp = self.tiles
         # Liste des tuiles en desordre
         l = random.sample(range(0, 16), 16)
         print("L:", l)
