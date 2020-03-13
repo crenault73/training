@@ -15,7 +15,8 @@ class My15PuzzleApp:
         self.window.title("Jeu de Taquin")
         self.window.iconbitmap("images/15puzzle.ico")
         self.window.config(background="white")
-        #self.window.geometry(str(600) + "x" + str(600))
+        self.window.resizable(False,False)
+        # self.window.geometry(str(600) + "x" + str(600))
         self.meal_suggestion = ""
 
         # Initialization des composants
@@ -25,28 +26,28 @@ class My15PuzzleApp:
         # self.create_elements()
         self.create_canvas()
         self.split_image_into_tiles()
-        self.display_tiles()
+        #self.display_tiles()
         self.shuffle_tiles()
         self.display_tiles()
+
 
         # Empaquetage
         self.frame.pack(expand=YES)
 
     def create_canvas(self):
         # Creation d'image
-        self.im = Image.open("images/tigers-3-1394809-639x700.png")
+        self.im = Image.open("images/tigers-3-1394809-639x639.png")
         w, h = self.im.size
         self.im = self.im.resize([int(w / 2), int(h / 2)])
         w, h = self.im.size
 
         self.image = ImageTk.PhotoImage(self.im)
 
-        canvas = Canvas(self.frame, width=w, height=h, bg="#4065A4", bd=0,
-                        highlightthickness=0)
-        canvas.create_image(w / 2, h / 2, image=self.image)
+        self.canvas = Canvas(self.frame, width=w, height=h, bg="#4065A4", bd=0,
+                             highlightthickness=0)
+        self.canvas.create_image(w / 2, h / 2, image=self.image)
         self.window.geometry(str(w) + "x" + str(h))
-        self.window.resizable(False, False)
-        canvas.pack(expand=YES)
+        self.canvas.pack(expand=YES)
 
     # Creation et indexation des tuiles
     def split_image_into_tiles(self):
@@ -67,17 +68,18 @@ class My15PuzzleApp:
     # Affichage des tuiles
     def display_tiles(self):
         w, h = self.im.size
-        new_im = Image.new('RGB', (w, h))
+        new_im = Image.new('RGB', (w, h), (255, 255, 255))
+        offset=1
         for i in range(0, 4):
             for j in range(0, 4):
-                print("Image_cropped size: " + str(self.tiles[i][j].img.width)+"/"+ str(self.tiles[i][j].img.height))
+                print("Image_cropped size: " + str(self.tiles[i][j].img.width) + "/" + str(self.tiles[i][j].img.height))
                 print("Tile N°:", self.tiles[i][j].n)
-                new_im.paste(self.tiles[i][j].img, (0, 0))
-        #self.image = ImageTk.PhotoImage(new_im)
-        canvas = Canvas(self.frame, width=w, height=h, bg="#4065A4", bd=0, highlightthickness=0)
-        canvas.create_image(w / 2, h / 2, image=self.image)
-        canvas.pack(expand=YES)
-#
+                new_im.paste(self.tiles[i][j].img, (i * int(offset+w / 4), j * int(offset+w / 4)))
+        self.image = ImageTk.PhotoImage(new_im)
+        self.canvas.create_image(w / 2, h / 2, image=self.image)
+        self.canvas.pack(expand=YES)
+
+    #
     def shuffle_tiles(self):
         tmp = copy.deepcopy(self.tiles)
         # tmp = self.tiles
