@@ -23,10 +23,9 @@ class My15PuzzleApp:
         self.frame = Frame(self.window, bg='white')
 
         # Création des composants
-        # self.create_elements()s
         self.create_canvas()
         self.split_image_into_tiles()
-        # self.display_tiles()
+        #self.display_tiles()
         self.shuffle_tiles()
         self.display_tiles()
 
@@ -50,13 +49,13 @@ class My15PuzzleApp:
         self.canvas.pack(expand=YES)
 
     def identify_tile_num_by_mouse_coords(self, x, y):
-        print("Mouse coords:", x, y)
+        #print("Mouse coords:", x, y)
         w, h = self.im.size
         # tile (i,j)
         i, j = int(x * 4 / w), int(y * 4 / h)
         # tile n
         n = 4 * j + i
-        print("(", i, ",", j, ")", "Tile N°:", n)
+        #print("(", i, ",", j, ")", "Tile N°:", n)
         return n
 
     def identify_tile_num_by_tile_coords(self, i, j):
@@ -79,7 +78,7 @@ class My15PuzzleApp:
         for j in range(0, 4):
             for i in range(0, 4):
                 n = self.identify_tile_num_by_tile_coords(i,j)
-                print("Displaying tile pos:", n, "Tile id:",self.tiles[i][j].id)
+                #print("Displaying tile pos:", n, "Tile id:",self.tiles[i][j].id)
 
     def swap_tiles(self, n, m):
         #self.log_tiles()
@@ -97,16 +96,17 @@ class My15PuzzleApp:
 
     def move_tile(self, n):
         i, j = self.identify_tile_coords_by_pos(n)
-        print("self.tiles[i][j].img: ", self.tiles[i][j].img)
+        #print("self.tiles[i][j].img: ", self.tiles[i][j].img)
         # Bouge la tuile s'il existe une tuile vide à côté
         # identifie la tuile vide connexe
         if (self.tiles[i][j].img is not None):
             m = self.find_near_empty_tile_pos(n)
             if m>=0:
-                print("Empty tile found:", m)
+                #print("Empty tile found:", m)
                 self.swap_tiles(n,m)
         else:
-            print("Empty tile can't move :(", i, ",", j, ")")
+            k=-1
+            #print("Empty tile can't move :(", i, ",", j, ")")
 
     def find_near_empty_tile_pos(self, n):
         i, j = self.identify_tile_coords_by_pos(n)
@@ -127,16 +127,22 @@ class My15PuzzleApp:
         # si aucune tuille nulle trouvé
         return m
 
+    def victory(self):
+        print("Victory !!!")
+
     def click_on_tile(self, evt):
-        print('Click down in:', evt)
+        #print('Click down in:', evt)
         n = self.identify_tile_num_by_mouse_coords(evt.x, evt.y)
         self.move_tile(n)
         self.display_tiles()
+        #print("Ordered ?:",self.test_tiles_ordered())
+        if self.test_tiles_ordered():
+            self.victory()
 
     # Creation et indexation des tuiles
     def split_image_into_tiles(self):
         w, h = self.im.size
-        print("Size:", self.im.size)
+        #("Size:", self.im.size)
         id = 0
         for j in range(0, 4):
             for i in range(0, 4):
@@ -149,7 +155,16 @@ class My15PuzzleApp:
                         (i * int(w / 4), j * int(w / 4), (i * int(w / 4)) + int(w / 4), (j * int(w / 4)) + int(w / 4))))
                 id += 1
                 self.tiles[i][j] = tile
-        print("Tiles:", self.tiles)
+        #print("Tiles:", self.tiles)
+
+    def test_tiles_ordered(self):
+        ordered = True
+        for j in range(0, 4):
+            for i in range(0, 4):
+                n = self.identify_tile_num_by_tile_coords(i,j)
+                #print("Displaying tile pos:", n, "Tile id:",self.tiles[i][j].id)
+                if  n != self.tiles[i][j].id : ordered=False
+        return ordered
 
     # Affichage des tuiles
     def display_tiles(self):
@@ -177,18 +192,16 @@ class My15PuzzleApp:
         # tmp = self.tiles
         # Liste des tuiles en desordre
         l = random.sample(range(0, 16), 16)
-        print("L:", l)
+        #print("L:", l)
         n = 0
         for i in range(0, 4):
             for j in range(0, 4):
                 idx = l[i + 4 * j]
                 i2 = int(idx / 4)
                 j2 = int(idx % 4)
-                print("i,j:", i, j, "l[", n, "]", idx, ", 4*i+j:", 4 * i + j, " - [", i2, ",", j2, "]", "Tile id:",
-                      tmp[i][j].id, ", TileTmp id:", tmp[i2][j2].id)
+                #print("i,j:", i, j, "l[", n, "]", idx, ", 4*i+j:", 4 * i + j, " - [", i2, ",", j2, "]", "Tile id:", tmp[i][j].id, ", TileTmp id:", tmp[i2][j2].id)
                 self.tiles[i][j] = tmp[i2][j2]
                 n += 1
-
 
 class Tile:
     def __init__(self, id, img):
