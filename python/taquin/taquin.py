@@ -135,8 +135,8 @@ class My15PuzzleApp:
         n = self.identify_tile_num_by_mouse_coords(evt.x, evt.y)
         self.move_tile(n)
         self.display_tiles()
-        #print("Ordered ?:",self.test_tiles_ordered())
-        if self.test_tiles_ordered():
+        #print("Ordered ?:",self.is_solved())
+        if self.is_solved():
             self.victory()
 
     # Creation et indexation des tuiles
@@ -157,7 +157,7 @@ class My15PuzzleApp:
                 self.tiles[i][j] = tile
         #print("Tiles:", self.tiles)
 
-    def test_tiles_ordered(self):
+    def is_solved(self):
         ordered = True
         for j in range(0, 4):
             for i in range(0, 4):
