@@ -40,3 +40,23 @@ class Player:
         self.weapon is not None
 
 
+class Warrior(Player):
+
+    def __init__(self, pseudo, healt, attack):
+        super().__init__(pseudo, healt, attack)
+        self.armor=3
+        print("Bienvenue au guerrier ", self.pseudo, "/ Points de vie :", self.health, "/ Attack : ",self.attack)
+
+    def damage(self, damage):
+      if self.armor > 0:
+          damage=0
+          self.armor -= 1
+      super().damage(damage)
+
+    def blade(self):
+        self.armor=3
+        print("Les points d'arumure on été rechargés")
+
+    def get_armor(self):
+        return self.armor
+

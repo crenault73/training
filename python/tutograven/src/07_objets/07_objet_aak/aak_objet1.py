@@ -1,5 +1,6 @@
 from model.aak_player import Player
 from model.aak_weapon import Weapon
+from model.aak_player import Warrior
 
 
 player1 = Player("Amira", 20, 3)
@@ -32,6 +33,10 @@ print(player1.get_pseudo(), "attaque", player2.get_pseudo())
 print("Bienvenue au joueur ", player1.get_pseudo(), "/ Points de vie :", player1.get_healt(), "/ Attack : ", player1.get_attack())
 print("Bienvenue au joueur ", player2.get_pseudo(), "/ Points de vie :", player2.get_healt(), "/ Attack : ", player2.get_attack())
 
+
+warrior = Warrior("DarkWarrior", 30, 4)
+warrior.damage(4)
+print("Vie : ", warrior.get_healt(), "armor : ", warrior.get_armor())
 
 
 
