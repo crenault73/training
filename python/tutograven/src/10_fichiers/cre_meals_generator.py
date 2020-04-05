@@ -11,7 +11,7 @@ class MyMealGeneratorApp:
         self.window.geometry("720x360")
         self.window.minsize(720, 432)
         self.window.maxsize(1200, 720)
-        self.window.iconbitmap("images/meal.ico")
+        #self.window.iconbitmap("images/meal.ico")
         self.window.config(background="#c8e0d1")
 
         self.meal_suggestion = ""
