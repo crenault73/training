@@ -1,0 +1,47 @@
+import pygame
+from player import Player
+from game import Game
+
+pygame.init()
+
+# Generer la fenetre de notre jeu
+pygame.display.set_caption("Comet fall Game")
+screen = pygame.display.set_mode((1080, 720))
+
+# Importer l'arrière plan de notre jeu
+background = pygame.image.load('assets/bg.jpg')
+
+# Charger un player
+game = Game()
+
+running = True
+
+# Boucle tant que la variable running est vraie
+while running:
+
+    # Appliquer l'arrière-plan de notre jeu
+    screen.blit(background, (0, -200))
+
+    # Appliquer l'image du joueur
+    screen.blit(game.player.image, game.player.rect)
+
+    # Vérifier si le joueur souhaite aller à gauche où à droite:
+    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < screen.get_width():
+        game.player.move_right()
+    elif game.pressed.get(pygame.K_LEFT) and game.player.rect.x > 0:
+        game.player.move_left()
+
+    # Mettre à jour l'écran
+    pygame.display.flip()
+
+    # Si le joueur ferme la fenetre
+    for event in pygame.event.get():
+        # que l'evenement est la fermeture de la fenetre
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()
+        # Detecter si un joueur lache une touche
+        elif event.type == pygame.KEYDOWN:
+            game.pressed[event.key] = True
+        elif event.type == pygame.KEYUP:
+            game.pressed[event.key] = False
