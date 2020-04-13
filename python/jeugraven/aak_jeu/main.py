@@ -1,7 +1,10 @@
+import pygame
+from projectile import Projectile
+from monster import Monster
 from game import Game
 from player import Player
-from projectile import Projectile
-import pygame
+
+
 
 
 # <>
@@ -33,12 +36,21 @@ while running:
     # appliquer l'image de notre joueur
     screen.blit(game.player.image, game.player.rect)
 
-    # appliquer l'ensemble des images de mon grope de projectile
+    # appliquer l'ensemble des images du groupe de projectile
     game.player.all_projectile.draw(screen)
+
+    #appliquer l'ensemble des images du groupe de monstres
+
+    game.all_monsters.draw(screen)
 
     # recuperer les projectiles du joueur
     for projectile in game.player.all_projectile:
         projectile.move()
+
+    # recuperer les monstres de notre jeu
+    for monster in game.all_monsters:
+        monster.forward()
+
 
     # verifier si le joueur souhaite aller à gauche ou à droite
     if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < screen.get_width() :
