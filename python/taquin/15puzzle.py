@@ -12,7 +12,7 @@ class My15PuzzleApp:
     def __init__(self):
         self.window = Tk()
         self.window.title("15puzzle")
-        self.window.iconbitmap("images/15puzzle.ico")
+        #self.window.iconbitmap("images/15puzzle.ico")
         self.window.config(background="white")
         self.window.resizable(False,False)
 

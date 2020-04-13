@@ -35,10 +35,6 @@ width = 300
 height = 300
 image = PhotoImage(file="cookie.png").zoom(10).subsample(32)
 
-#Créer une sous boite
-
-right_frame = Frame(frame, bg="#dec1aa")
-
 #Création Title
 
 label_title = Label(frame, text="Cliquer sur l'image", font=("Courrier", 25), bg="#dec1aa", fg="white")
