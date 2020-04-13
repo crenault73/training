@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((1080, 720))
 # Importer l'arrière plan de notre jeu
 background = pygame.image.load('assets/bg.jpg')
 
-# Charger un player
+# Charger un jeu
 game = Game()
 
 running = True
@@ -24,6 +24,13 @@ while running:
 
     # Appliquer l'image du joueur
     screen.blit(game.player.image, game.player.rect)
+
+    # Récuppérer les projectiles du joueur
+    for projectile in game.player.all_projectiles:
+        projectile.move()
+
+    # Appliquer l'ensemble des images de mon groupe de projectiles
+    game.player.all_projectiles.draw(screen)
 
     # Vérifier si le joueur souhaite aller à gauche où à droite:
     if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < screen.get_width():
@@ -43,5 +50,10 @@ while running:
         # Detecter si un joueur lache une touche
         elif event.type == pygame.KEYDOWN:
             game.pressed[event.key] = True
+
+            # Détecter si la touche espace est enclenchée
+            if event.key == pygame.K_SPACE:
+                game.player.lance_projectile()
+
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
