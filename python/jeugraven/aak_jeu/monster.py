@@ -4,8 +4,9 @@ import pygame
 # créer une classe qui va gérer la notion de monstre sur notre jeu
 class Monster(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, game):
         super().__init__()
+        self.game = game
         self.health = 100
         self.max_health = 100
         self.attack = 5
@@ -16,5 +17,8 @@ class Monster(pygame.sprite.Sprite):
         self.velocity = 2
 
     def forward(self):
-        self.rect.x -= self.velocity
+
+        # le déplacement ne pourra se faire uniquement que s'il n'ya pas de collision avec un groupe de joueurs
+        if not self.game.check_collision(self, self.game.all_players):
+            self.rect.x -= self.velocity
 
