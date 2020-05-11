@@ -20,7 +20,7 @@ screen = pygame.display.set_mode((1080, 720))
 background = pygame.image.load('assets/bg.jpg')
 
 # charger le joueur
-player = Player()
+#player = Player()
 
 # charger notre jeu
 game = Game()
