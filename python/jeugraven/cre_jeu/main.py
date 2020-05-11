@@ -25,6 +25,9 @@ while running:
     # Appliquer l'image du joueur
     screen.blit(game.player.image, game.player.rect)
 
+    # Actualiser la barre de vie du joueur
+    game.player.update_health_bar(screen)
+
     # Récuppérer les projectiles du joueur
     for projectile in game.player.all_projectiles:
         projectile.move()
@@ -32,6 +35,7 @@ while running:
     # Récuppérer les monstres
     for monster in game.all_monsters:
         monster.forward()
+        monster.update_health_bar(screen)
 
     # Appliquer l'ensemble des images de mon groupe de projectiles
     game.player.all_projectiles.draw(screen)
@@ -50,6 +54,7 @@ while running:
 
     # Si le joueur ferme la fenetre
     for event in pygame.event.get():
+
         # que l'evenement est la fermeture de la fenetre
         if event.type == pygame.QUIT:
             running = False
@@ -57,10 +62,8 @@ while running:
         # Detecter si un joueur lache une touche
         elif event.type == pygame.KEYDOWN:
             game.pressed[event.key] = True
-
             # Détecter si la touche espace est enclenchée
             if event.key == pygame.K_SPACE:
                 game.player.lance_projectile()
-
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
