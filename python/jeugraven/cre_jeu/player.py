@@ -19,9 +19,12 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = 500
 
     def damage(self, amount):
-        if self.health - amount > amount:
+        if self.health - amount >= amount:
             self.health -= amount
-        else: self.health = 0
+        else:
+            # Si le joueur n'a plus de point de vie
+            self.health = 0
+            self.game.game_over()
 
     def update_health_bar(self, surface):
         # Définir une couleur pour la jauge de vie (vert clair)
